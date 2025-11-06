@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/train_cls.py", line 19, in <module>
+    from core.dataset import build_dataset, build_pk_sampler # <-- IMPORT build_pk_sampler
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/core/dataset/__init__.py", line 1, in <module>
+    from .dataset_entry import *
+  File "/home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/core/dataset/dataset_entry.py", line 1, in <module>
+    from .vision import *
+  File "/home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/core/dataset/vision/__init__.py", line 5
+    >>>>>>> 7045efc (first)
+               ^
+SyntaxError: invalid decimal literal

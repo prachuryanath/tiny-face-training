@@ -26,3 +26,24 @@ Wed Nov 12 17:24:40 2025
 +-----------------------------------------------------------------------------------------+
 ### Finished TaskPrologue
 
+=== JOB_STATISTICS ===
+=== current date     : Wed Nov 12 05:25:27 PM CET 2025
+= Job-ID             : 1311806 on tinygpu
+= Job-Name           : training_job
+= Job-Command        : /home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/training_job.sbatch
+= Initial workdir    : /home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm
+= Queue/Partition    : v100
+= Slurm account      : iwi5 with QOS=normal
+= Requested resources:  for 12:00:00
+= Elapsed runtime    : 00:00:50
+= Total RAM usage    : 0.7 GiB of requested  GiB (%)   
+= Node list          : tg071
+= Subm/Elig/Start/End: 2025-11-12T16:22:06 / 2025-11-12T16:22:06 / 2025-11-12T17:24:04 / 2025-11-12T17:24:54
+======================
+=== Quota infos ======
+    Path                 Used     SoftQ    HardQ    Gracetime  Filec    FileQ    FiHaQ    FileGrace    
+!!! /home/hpc             112.9G   104.9G   209.7G  -29305days     742K     500K   1,000K  -29305days !!!
+    /home/woody             0.0K  1000.0G  1500.0G        N/A       1    5,000K   7,500K        N/A    
+======================
+=== GPU utilization ==
+gpu_name, gpu_bus_id, pid, gpu_utilization [%], mem_utilization [%], max_memory_usage [MiB], time [ms]
