@@ -55,7 +55,6 @@ class ClassificationTrainer(BaseTrainer):
 
                 output = self.model(images)
                 loss = self.criterion(output, labels)
-
                 # backward and update
                 loss.backward()
 
@@ -73,7 +72,7 @@ class ClassificationTrainer(BaseTrainer):
                     self.optimizer.post_step(self.model)
 
                 # after one step
-                train_loss.update(loss, anchor_img.shape[0])
+                train_loss.update(loss, images.shape[0])
                 acc1 = accuracy(output, labels, topk=(1,))[0]
                 train_top1.update(acc1.item(), images.shape[0])
 
