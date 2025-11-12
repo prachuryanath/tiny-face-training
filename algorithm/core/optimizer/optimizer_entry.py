@@ -8,11 +8,11 @@ from .sgd_scale import SGDScale
 
 
 REGISTERED_OPTIMIZER_DICT = {
-    'sgd': (torch.optim.SGD, {'momentum': 0.9, 'nesterov': False}),
-    'sgd_nomom': (torch.optim.SGD, {'momentum': 0, 'nesterov': False}),
+    'sgd': (torch.optim.SGD, {'momentum': 0.9, 'nesterov': False, 'foreach': False}),
+    'sgd_nomom': (torch.optim.SGD, {'momentum': 0, 'nesterov': False, 'foreach': False}),
 
-    'sgd_scale': (SGDScale, {'momentum': 0.9, 'nesterov': False}),
-    'sgd_scale_nomom': (SGDScale, {'momentum': 0., 'nesterov': False}),    
+    'sgd_scale': (SGDScale, {'momentum': 0.9, 'nesterov': False, 'foreach': False}),
+    'sgd_scale_nomom': (SGDScale, {'momentum': 0., 'nesterov': False, 'foreach': False}),    
     
     'adam': (torch.optim.Adam, {}),
     'adamw': (torch.optim.AdamW, {}),

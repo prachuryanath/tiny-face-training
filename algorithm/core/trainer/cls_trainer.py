@@ -50,11 +50,12 @@ class ClassificationTrainer(BaseTrainer):
                   desc='Train Epoch #{}'.format(epoch + 1),
                   disable=dist.rank() > 0 or configs.ray_tune) as t:
             for _, (images, labels) in enumerate(self.data_loader['train']):
-                images, labels = images.cuda(), labels.cuda()
+                images, labels = images.cuda(), labels.cuda()                
                 self.optimizer.zero_grad()
 
                 output = self.model(images)
                 loss = self.criterion(output, labels)
+
                 # backward and update
                 loss.backward()
 
@@ -72,7 +73,7 @@ class ClassificationTrainer(BaseTrainer):
                     self.optimizer.post_step(self.model)
 
                 # after one step
-                train_loss.update(loss, images.shape[0])
+                train_loss.update(loss, anchor_img.shape[0])
                 acc1 = accuracy(output, labels, topk=(1,))[0]
                 train_top1.update(acc1.item(), images.shape[0])
 

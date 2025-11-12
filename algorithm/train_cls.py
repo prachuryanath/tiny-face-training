@@ -3,6 +3,11 @@ import os
 import sys
 import argparse
 
+# an image classification trainer
+import os
+import sys
+import argparse
+
 import torch
 import torch.backends.cudnn as cudnn
 import torch.utils.data.distributed
@@ -11,9 +16,16 @@ from core.utils import dist
 from core.model import build_mcu_model
 from core.utils.config import configs, load_config_from_file, update_config_from_args, update_config_from_unknown_args
 from core.utils.logging import logger
-from core.dataset import build_dataset
+from core.dataset import build_dataset, build_pk_sampler # <-- IMPORT build_pk_sampler
 from core.optimizer import build_optimizer
-from core.trainer.cls_trainer import ClassificationTrainer
+from core.utils.batch_hard_triplet_loss import BatchHardTripletLoss # <-- IMPORT NEW LOSS
+
+# from core.trainer.cls_trainer import ClassificationTrainer
+import numpy as np
+if not hasattr(np, "bool"):
+    np.bool = bool
+
+from core.trainer.face_rec_trainer import FaceRecognitionTrainer
 from core.builder.lr_scheduler import build_lr_scheduler
 
 # Training settings
@@ -50,21 +62,49 @@ def main():
     # create dataset
     dataset = build_dataset()
     data_loader = dict()
-    for split in dataset:
+    
+    split = 'train'
+    
+    # --- BUILD SAMPLER ---
+    # Check if we are using the new PK Sampler
+    if configs.data_provider.get('dataset_type') == 'pk_sampler':
+        logger.info("Using PK Sampler for batch hard mining.")
+        batch_sampler = build_pk_sampler(
+            dataset=dataset[split],
+            world_size=dist.size(),
+            rank=dist.rank()
+        )
+        
+        data_loader[split] = torch.utils.data.DataLoader(
+            dataset[split],
+            batch_sampler=batch_sampler, # <-- Use batch_sampler
+            num_workers=configs.data_provider.n_worker,
+            pin_memory=True
+        )
+        # Calculate len for LR scheduler
+        len_train_loader = len(batch_sampler)
+        
+    else:
+        # --- Fallback to old sampler (e.g., 'triplet') ---
+        logger.info("Using standard DistributedSampler.")
         sampler = torch.utils.data.DistributedSampler(
             dataset[split],
             num_replicas=dist.size(),
             rank=dist.rank(),
             seed=configs.manual_seed,
-            shuffle=(split == 'train'))
+            shuffle=True)
+            
         data_loader[split] = torch.utils.data.DataLoader(
             dataset[split],
             batch_size=configs.data_provider.base_batch_size,
             sampler=sampler,
             num_workers=configs.data_provider.n_worker,
             pin_memory=True,
-            drop_last=(split == 'train'),
+            drop_last=True,
         )
+        len_train_loader = len(data_loader[split])
+    # --- END SAMPLER LOGIC ---
+
 
     # create model
     model = build_mcu_model().cuda()
@@ -72,13 +112,23 @@ def main():
     if dist.size() > 1:
         model = torch.nn.parallel.DistributedDataParallel(
             model,
-            device_ids=[dist.local_rank()])  # , find_unused_parameters=True)
+            device_ids=[dist.local_rank()],
+            find_unused_parameters=True # May be needed if using backward_config
+        )
 
-    criterion = torch.nn.CrossEntropyLoss()
+    # --- USE BATCH HARD TRIPLET LOSS ---
+    if configs.data_provider.get('dataset_type') == 'pk_sampler':
+        logger.info("Using BatchHardTripletLoss.")
+        criterion = BatchHardTripletLoss(margin=configs.get('triplet_margin', 16), p=2)
+    else:
+        logger.info("Using standard TripletMarginLoss.")
+        criterion = torch.nn.TripletMarginLoss(margin=configs.get('triplet_margin', 0.5), p=2)
+    
     optimizer = build_optimizer(model)
-    lr_scheduler = build_lr_scheduler(optimizer, len(data_loader['train']))
+    lr_scheduler = build_lr_scheduler(optimizer, len_train_loader) # Use correct length
 
-    trainer = ClassificationTrainer(model, data_loader, criterion, optimizer, lr_scheduler)
+    # --- USE NEW FACE REC TRAINER ---
+    trainer = FaceRecognitionTrainer(model, data_loader, criterion, optimizer, lr_scheduler)
 
     # kick start training
     if configs.resume:
