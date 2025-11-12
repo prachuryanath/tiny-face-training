@@ -22,10 +22,10 @@ data_provider:
 
 run_config:
   # learning rate
-  n_epochs: 25
+  n_epochs: 10
   base_lr: 0.025
   bs256_lr: null  # Notice: if this one is not None, it will overwrite base_lr
-  warmup_epochs: 5
+  warmup_epochs: 0
   warmup_lr: 0
   lr_schedule_name: cosine
   # wd

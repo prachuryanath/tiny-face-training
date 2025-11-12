@@ -7,10 +7,15 @@ exp-vww-bak/
 lightning_logs/
 run.sh
 runs/
+runs_final/
+runs-512/
+runs-128/
 wandb/
 test.py
-*dataset/**
-runs*/**
+dataset/
+eval_dataset/
+
+*.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
