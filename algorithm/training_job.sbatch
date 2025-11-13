@@ -20,7 +20,7 @@ module load python/3.12-conda
 source ../../insightface/recognition/arcface_torch/.pal/bin/activate
 
 # Run your Python script with all the required parameters
-python train_cls.py   configs/transfer.yaml --run_dir runs-128/syn/mcunet-5fps/sparse_124kb/sgd_qas_nomom \
+python train_cls.py   configs/transfer.yaml --run_dir runs-128/face/mcunet-5fps/sparse_100kb/sgd_qas_nomom \
     --net_name mcunet-5fps  --bs256_lr  0.1  --optimizer_name sgd_scale_nomom \
-    --enable_backward_config 1 --n_bias_update 24 --manual_weight_idx 21-24-27-30-33-39 \
-    --weight_update_ratio 0.25-1-1-1-0.5-0.5 > train_sparse_update_long.txt 2>&1
+    --enable_backward_config 1 --n_bias_update 22 --manual_weight_idx 21-24-27-30-36-39 \
+    --weight_update_ratio 1-1-1-1-0.125-0.25 > train_sparse_update_face.txt 2>&1

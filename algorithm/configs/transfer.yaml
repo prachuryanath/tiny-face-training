@@ -1,7 +1,7 @@
 data_provider:
-  root: /home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/dataset
-  # root : /home/hpc/iwi5/iwi5361h/Tiny-Training/algorithm/dataset/face-1000/train
-  num_classes: 10050
+  # root: /home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/dataset
+  root : /home/hpc/iwi5/iwi5361h/Tiny-Training/algorithm/dataset/face-1000/train
+  num_classes: 1000
   image_size: 112
   verification_targets_dir: /home/hpc/iwi5/iwi5361h/tiny-face-training-main/algorithm/eval_dataset
   verification_targets:
