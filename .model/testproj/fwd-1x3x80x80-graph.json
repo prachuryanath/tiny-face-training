@@ -1,0 +1,7324 @@
+[
+  {
+    "name": "nn.mcuconv2d@0",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        2,
+        2
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "input",
+        "var_type": "parameter",
+        "shape": [
+          1,
+          3,
+          80,
+          80
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v0_weight",
+        "var_type": "parameter",
+        "shape": [
+          16,
+          3,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v0_bias",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v0_scale",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@0",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@1",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@0",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@1",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@2",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 16,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@1",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          16,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@2",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@3",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@2",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@3",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@4",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@3",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          8,
+          16,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          8
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v1_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          8
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@4",
+        "var_type": "activation",
+        "shape": [
+          1,
+          8,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@5",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@4",
+        "var_type": "activation",
+        "shape": [
+          1,
+          8,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@5",
+        "var_type": "activation",
+        "shape": [
+          1,
+          8,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@6",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@5",
+        "var_type": "activation",
+        "shape": [
+          1,
+          8,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          32,
+          8,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          32
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          32
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@6",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@7",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@6",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          40,
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@7",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@8",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        2,
+        2
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 32,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@7",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          40,
+          40
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          32,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          32
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          32
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@8",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@9",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@8",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@9",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@10",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@9",
+        "var_type": "activation",
+        "shape": [
+          1,
+          32,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          16,
+          32,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v2_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@10",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@11",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@10",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@11",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@12",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@11",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          16,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@12",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@13",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@12",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@13",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@14",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 48,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@13",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@14",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@15",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@14",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@15",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@16",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@15",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          16,
+          48,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          16
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@16",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@17",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@16",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@17",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@18",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@11",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@17",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v3_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@18",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@19",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@18",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@19",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@20",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@19",
+        "var_type": "activation",
+        "shape": [
+          1,
+          16,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          16,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@20",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@21",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@20",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@21",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@22",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        2,
+        2
+      ],
+      "padding": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 48,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@21",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          20,
+          20
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          1,
+          7,
+          7
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@22",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@23",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@22",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@23",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@24",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@23",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          24,
+          48,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          24
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v4_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          24
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@24",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@25",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@24",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@25",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@26",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@25",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          120,
+          24,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@26",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@27",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@26",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@27",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@28",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 120,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@27",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          120,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@28",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@29",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@28",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@29",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@30",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@29",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          24,
+          120,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          24
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          24
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@30",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@31",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@30",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@31",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@32",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@25",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@31",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v5_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@32",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@33",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@32",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@33",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@34",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@33",
+        "var_type": "activation",
+        "shape": [
+          1,
+          24,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          120,
+          24,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@34",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@35",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@34",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@35",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@36",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        2,
+        2
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 120,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@35",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          10,
+          10
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          120,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          120
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@36",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@37",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@36",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@37",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@38",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@37",
+        "var_type": "activation",
+        "shape": [
+          1,
+          120,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          40,
+          120,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v6_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          40
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@38",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@39",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@38",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@39",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@40",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@39",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          160,
+          40,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@40",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@41",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@40",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@41",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@42",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 160,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@41",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          160,
+          1,
+          7,
+          7
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@42",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@43",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@42",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@43",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@44",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@43",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          40,
+          160,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          40
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          40
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@44",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@45",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@44",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@45",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@46",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@39",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@45",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v7_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@46",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@47",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@46",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@47",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@48",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@47",
+        "var_type": "activation",
+        "shape": [
+          1,
+          40,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          160,
+          40,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@48",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@49",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@48",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@49",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@50",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 160,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@49",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          160,
+          1,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@50",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@51",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@50",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@51",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@52",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@51",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          160,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v8_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@52",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@53",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@52",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@53",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@54",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@53",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          144,
+          48,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          144
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          144
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@54",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@55",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@54",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@55",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@56",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 144,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@55",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          144,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          144
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          144
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@56",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@57",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@56",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@57",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@58",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@57",
+        "var_type": "activation",
+        "shape": [
+          1,
+          144,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          144,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@58",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@59",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@58",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@59",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@60",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@53",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@59",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v9_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@60",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@61",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@60",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@61",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@62",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@61",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          192,
+          48,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          192
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          192
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@62",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@63",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@62",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@63",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@64",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 192,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@63",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          192,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          192
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          192
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@64",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@65",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@64",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@65",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@66",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@65",
+        "var_type": "activation",
+        "shape": [
+          1,
+          192,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          48,
+          192,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          48
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@66",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@67",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@66",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@67",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@68",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@61",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@67",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v10_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@68",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@69",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@68",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@69",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@70",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@69",
+        "var_type": "activation",
+        "shape": [
+          1,
+          48,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          240,
+          48,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          240
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          240
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@70",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@71",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@70",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          5,
+          5
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@71",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@72",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        2,
+        2
+      ],
+      "padding": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 240,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@71",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          240,
+          1,
+          7,
+          7
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          240
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          240
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@72",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@73",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@72",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@73",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@74",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@73",
+        "var_type": "activation",
+        "shape": [
+          1,
+          240,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          96,
+          240,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v11_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@74",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@75",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@74",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@75",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@76",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@75",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          384,
+          96,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@76",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@77",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@76",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@77",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@78",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 384,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@77",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          384,
+          1,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@78",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@79",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@78",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@79",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@80",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@79",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          96,
+          384,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@80",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@81",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@80",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@81",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@82",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@75",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@81",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v12_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@82",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@83",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@82",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@83",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@84",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@83",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          384,
+          96,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@84",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@85",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@84",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@85",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@86",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 384,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@85",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          384,
+          1,
+          5,
+          5
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          384
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@86",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@87",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@86",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@87",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@88",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@87",
+        "var_type": "activation",
+        "shape": [
+          1,
+          384,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          96,
+          384,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          96
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@88",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@89",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@88",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@89",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuadd@90",
+    "type": "nn.mcuadd",
+    "attrs": {
+      "axis": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@83",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "out_nn.mcutruncate@89",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_zero_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_zero_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_scale_x1",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_scale_x2",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v13_qadd_scale_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuadd@90",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@91",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuadd@90",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@91",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@92",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@91",
+        "var_type": "activation",
+        "shape": [
+          1,
+          96,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_0_weight",
+        "var_type": "parameter",
+        "shape": [
+          576,
+          96,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_0_bias",
+        "var_type": "parameter",
+        "shape": [
+          576
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_0_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_0_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_0_scale",
+        "var_type": "parameter",
+        "shape": [
+          576
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@92",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@93",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@92",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@93",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@94",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 576,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@93",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_1_weight",
+        "var_type": "parameter",
+        "shape": [
+          576,
+          1,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_1_bias",
+        "var_type": "parameter",
+        "shape": [
+          576
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_1_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_1_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_1_scale",
+        "var_type": "parameter",
+        "shape": [
+          576
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@94",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@95",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@94",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@95",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@96",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@95",
+        "var_type": "activation",
+        "shape": [
+          1,
+          576,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_2_weight",
+        "var_type": "parameter",
+        "shape": [
+          160,
+          576,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_2_bias",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_2_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_2_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v14_conv_2_scale",
+        "var_type": "parameter",
+        "shape": [
+          160
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@96",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@97",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@96",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          3,
+          3
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@97",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "mcumean@98",
+    "type": "mcumean",
+    "attrs": {
+      "axis": [
+        2,
+        3
+      ],
+      "keepdims": 1,
+      "exclude": 0
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@97",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          3,
+          3
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_mcumean@98",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcuconv2d@99",
+    "type": "nn.mcuconv2d",
+    "attrs": {
+      "strides": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "dilation": [
+        1,
+        1
+      ],
+      "groups": 1,
+      "channels": null,
+      "kernel_size": null,
+      "data_layout": "NCHW",
+      "kernel_layout": "OIHW",
+      "out_layout": "",
+      "out_dtype": ""
+    },
+    "inputs": [
+      {
+        "name": "out_mcumean@98",
+        "var_type": "activation",
+        "shape": [
+          1,
+          160,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v15_weight",
+        "var_type": "parameter",
+        "shape": [
+          100,
+          160,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v15_bias",
+        "var_type": "parameter",
+        "shape": [
+          100
+        ],
+        "dtype": "int32",
+        "meta": null
+      },
+      {
+        "name": "v15_zero_x",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v15_zero_y",
+        "var_type": "parameter",
+        "shape": [
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      },
+      {
+        "name": "v15_scale",
+        "var_type": "parameter",
+        "shape": [
+          100
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcuconv2d@99",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100,
+          1,
+          1
+        ],
+        "dtype": "int32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.mcutruncate@100",
+    "type": "nn.mcutruncate",
+    "attrs": {
+      "min": -128,
+      "max": 127
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcuconv2d@99",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100,
+          1,
+          1
+        ],
+        "dtype": "int32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.mcutruncate@100",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "reshape@101",
+    "type": "reshape",
+    "attrs": {
+      "newshape": [
+        0,
+        0
+      ]
+    },
+    "inputs": [
+      {
+        "name": "out_nn.mcutruncate@100",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100,
+          1,
+          1
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_reshape@101",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "int8",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "cast@102",
+    "type": "cast",
+    "attrs": {
+      "dtype": "float32"
+    },
+    "inputs": [
+      {
+        "name": "out_reshape@101",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "int8",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_cast@102",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "float32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.log_softmax@103",
+    "type": "nn.log_softmax",
+    "attrs": {
+      "axis": -1
+    },
+    "inputs": [
+      {
+        "name": "out_cast@102",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.log_softmax@103",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "float32",
+        "meta": {
+          "children": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "nn.cross_entropy_with_logits@104",
+    "type": "nn.cross_entropy_with_logits",
+    "attrs": {},
+    "inputs": [
+      {
+        "name": "out_nn.log_softmax@103",
+        "var_type": "activation",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "float32",
+        "meta": null
+      },
+      {
+        "name": "label",
+        "var_type": "parameter",
+        "shape": [
+          1,
+          100
+        ],
+        "dtype": "float32",
+        "meta": null
+      }
+    ],
+    "outputs": [
+      {
+        "name": "out_nn.cross_entropy_with_logits@104",
+        "var_type": "activation",
+        "shape": [
+          1
+        ],
+        "dtype": "float32",
+        "meta": {
+          "children": 0
+        }
+      }
+    ]
+  }
+]
