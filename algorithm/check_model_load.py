@@ -7,8 +7,8 @@ import torch.nn as nn
 # Ensure this script is placed in the 'algorithm/' directory
 # so that these imports work correctly.
 try:
-    from core.model import build_mcu_model
-    from core.utils.config import configs, load_config_from_file
+    from algorithm.core.model import build_mcu_model
+    from algorithm.core.utils.config import configs, load_config_from_file
 except ImportError:
     print("Error: Could not import project modules.")
     print("Please make sure you run this script from the 'algorithm/' directory,")
@@ -20,7 +20,7 @@ except ImportError:
 # ---------------------------------------------------
 
 # Path to the checkpoint .pth file saved by base_trainer.py
-CHECKPOINT_PATH = "ckpt.best.pth" 
+CHECKPOINT_PATH = "algorithm/ckpt.best.pth" 
 
 # Path to the .yaml config file you used for training
 # This is needed to build the model architecture
