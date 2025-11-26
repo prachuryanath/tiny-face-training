@@ -10,19 +10,20 @@ from ..utils import dist
 from ..utils.logging import logger
 
 # Import verification helpers
-try:
-    from ..utils.verification import load_bin, test
-except ImportError:
-    print("Warning: algorithm.verification could not be imported. Validation will fail.")
-    print("Please ensure 'verification.py' is in the 'algorithm/' directory.")
-    load_bin = None
-    test = None
-
+# try:
+#     from ..utils.verification import load_bin, test
+# except ImportError:
+#     print("Warning: algorithm.verification could not be imported. Validation will fail.")
+#     print("Please ensure 'verification.py' is in the 'algorithm/' directory.")
+#     load_bin = None
+#     test = None
+load_bin = None
 
 class FaceRecognitionTrainer(BaseTrainer):
 
-    def __init__(self, model, data_loader, criterion, optimizer, lr_scheduler):
+    def __init__(self, model, data_loader, criterion, optimizer, lr_scheduler, metric_fc=None):
         super().__init__(model, data_loader, criterion, optimizer, lr_scheduler)
+        self.metric_fc = metric_fc
 
         self.verification_sets = {}
         if dist.rank() == 0: # Only load validation sets on main process
@@ -109,15 +110,11 @@ class FaceRecognitionTrainer(BaseTrainer):
 
     def train_one_epoch(self, epoch):
         self.model.train()
+        if self.metric_fc:
+            self.metric_fc.train() # Ensure Head is in train mode
         
-        # --- SAMPLER LOGIC ---
-        # Get the correct sampler to set the epoch
-        train_loader = self.data_loader['train']
-        if hasattr(train_loader, 'batch_sampler') and hasattr(train_loader.batch_sampler, 'set_epoch'):
-            train_loader.batch_sampler.set_epoch(epoch) # For PKSampler
-        elif hasattr(train_loader, 'sampler') and hasattr(train_loader.sampler, 'set_epoch'):
-            train_loader.sampler.set_epoch(epoch) # For DistributedSampler
-        # --- END SAMPLER LOGIC ---
+        self.data_loader['train'].sampler.set_epoch(epoch)
+        dataset_type = configs.data_provider.get('dataset_type', 'image_folder')    
 
         train_loss = DistributedMetric('train_loss')
 
@@ -125,92 +122,52 @@ class FaceRecognitionTrainer(BaseTrainer):
                   desc='Train Epoch #{}'.format(epoch + 1),
                   disable=dist.rank() > 0 or configs.ray_tune) as t:
             
-            # --- DETECT DATALOADER TYPE ---
             dataset_type = configs.data_provider.get('dataset_type', 'image_folder')
             
-            if dataset_type == 'pk_sampler':
-                # --- NEW: BATCH HARD MINING LOOP ---
-                for _, (images, labels) in enumerate(self.data_loader['train']):
-                    images, labels = images.cuda(), labels.cuda()
-                    batch_size = images.shape[0]
-                    
-                    self.optimizer.zero_grad()
-                    
-                    # Run model once
-                    embeddings_raw = self.model(images)
-                    
-                    # Normalize
-                    s = 32.0
-                    embeddings_normalized = F.normalize(embeddings_raw, p=2, dim=1)*s
-                    
-                    # Loss function does the mining
-                    loss = self.criterion(embeddings_normalized, labels)
-                    
-                    # Standard backward pass
-                    loss.backward()
-                    
-                    # ... (optimizer steps remain the same) ...
-                    if configs.backward_config.enable_backward_config:
-                        from core.utils.partial_backward import apply_backward_config
-                        apply_backward_config(self.model, configs.backward_config)
-                    if hasattr(self.optimizer, 'pre_step'):
-                        self.optimizer.pre_step(self.model)
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=5.0)
-                    self.optimizer.step()
-                    if hasattr(self.optimizer, 'post_step'):
-                        self.optimizer.post_step(self.model)
+            # --- PHASE 1: ARCFACE TRAINING LOOP ---
+            for _, (images, labels) in enumerate(self.data_loader['train']):
+                images, labels = images.cuda(), labels.cuda()
+                batch_size = images.shape[0]
+                
+                self.optimizer.zero_grad()
+                
+                # 1. Get Embeddings from Backbone (Floating Point)
+                embeddings = self.model(images) 
+                
+                # 2. Pass Embeddings + Labels to ArcFace Head
+                # This calculates the angular margin logits
+                output = self.metric_fc(embeddings, labels)
+                
+                # 3. Calculate CrossEntropy Loss on the angular logits
+                loss = self.criterion(output, labels)
+                
+                loss.backward()
+                
+                if configs.backward_config.enable_backward_config:
+                    from core.utils.partial_backward import apply_backward_config
+                    apply_backward_config(self.model, configs.backward_config)
 
-                    train_loss.update(loss, batch_size)
-                    
-                    t.set_postfix({
-                        'loss': train_loss.avg.item(),
-                        'batch_size': batch_size,
-                        'img_size': images.shape[2],
-                        'lr': self.optimizer.param_groups[0]['lr'],
-                    })
-                    t.update()
-                    self.lr_scheduler.step()
+                if hasattr(self.optimizer, 'pre_step'):
+                    self.optimizer.pre_step(self.model)
+                
+                # Clip gradients for stability (important for ArcFace)
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=5.0)
+                
+                self.optimizer.step()
+                
+                if hasattr(self.optimizer, 'post_step'):
+                    self.optimizer.post_step(self.model)
 
-            else:
-                # --- OLD: TRIPLET LOOP (KEPT FOR COMPATIBILITY) ---
-                for _, (anchor_img, positive_img, negative_img) in enumerate(self.data_loader['train']):
-                    
-                    images_combined = torch.cat((anchor_img, positive_img, negative_img), dim=0).cuda()
-                    batch_size = anchor_img.shape[0] 
-                    
-                    self.optimizer.zero_grad()
-
-                    embeddings_raw = self.model(images_combined)
-                    embeddings_normalized = F.normalize(embeddings_raw, p=2, dim=1)
-                    
-                    emb_anchor = embeddings_normalized[0:batch_size]
-                    emb_positive = embeddings_normalized[batch_size : batch_size*2]
-                    emb_negative = embeddings_normalized[batch_size*2 : batch_size*3]
-                    
-                    loss = self.criterion(emb_anchor, emb_positive, emb_negative)
-
-                    loss.backward()
-
-                    if configs.backward_config.enable_backward_config:
-                        from core.utils.partial_backward import apply_backward_config
-                        apply_backward_config(self.model, configs.backward_config)
-                    if hasattr(self.optimizer, 'pre_step'):
-                        self.optimizer.pre_step(self.model)
-                    self.optimizer.step()
-                    if hasattr(self.optimizer, 'post_step'):
-                        self.optimizer.post_step(self.model)
-
-                    train_loss.update(loss, batch_size)
-
-                    t.set_postfix({
-                        'loss': train_loss.avg.item(),
-                        'batch_size': batch_size,
-                        'img_size': anchor_img.shape[2],
-                        'lr': self.optimizer.param_groups[0]['lr'],
-                    })
-                    t.update()
-                    self.lr_scheduler.step()
-
+                train_loss.update(loss, batch_size)
+                
+                t.set_postfix({
+                    'loss': train_loss.avg.item(),
+                    'batch_size': batch_size,
+                    'img_size': images.shape[2],
+                    'lr': self.optimizer.param_groups[0]['lr'],
+                })
+                t.update()
+                self.lr_scheduler.step()
         return {
             'train/loss': train_loss.avg.item(),
             'train/lr': self.optimizer.param_groups[0]['lr'],

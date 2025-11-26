@@ -12,10 +12,11 @@ data_provider:
   n_worker: 8
   image_size: 128
   num_classes: null
+  dataset : image_folder
   
   # --- PK SAMPLER SETTINGS ---
   # This now controls the batch sampling
-  dataset_type: triplet # <-- CHANGED from 'triplet'
+  dataset_type: arcface # <-- CHANGED from 'triplet'
   p_identities: 32         # (P) Number of identities per batch
   k_images: 4              # (K) Number of images per identity
   # Your total batch size will be P*K = 32*4 = 128
