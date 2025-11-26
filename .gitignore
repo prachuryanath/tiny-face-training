@@ -2,7 +2,7 @@
 
 ir_zoos/*
 **/checkpoint/*
-
+synth/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
